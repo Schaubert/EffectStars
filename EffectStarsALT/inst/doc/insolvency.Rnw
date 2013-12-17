@@ -1,0 +1,51 @@
+% \VignetteIndexEntry{Insolvency data}
+% \VignetteDepends{}
+
+\documentclass[a4paper]{article}
+
+\title{Insolvency data}
+
+\begin{document}
+
+\maketitle
+
+\setkeys{Gin}{width=1.1\textwidth}
+
+<<echo=FALSE>>=
+options(width=80)
+@
+
+<<results=hide>>=
+library(EffectStars)
+data(insolvency)
+@
+
+Effect Stars for the sequential logit model for insolvency data including p-values "p-global" and the additional circles refering to the global effects. To save computational time, only some preselected variables are used. 
+ 
+
+<<fig=TRUE,width=12,height=15,eval=FALSE>>=
+star.sequential(Insolvency ~ Sector + Legal + Pecuniary_Reward + Seed_Capital
++ Debt_Capital + Employees, insolvency, cex.cat = 1, cex.labels = 1.2, dist.y 
+= 1.1, lwd.circle = 2, test.glob = TRUE, globcircle = TRUE, dist.x = 1.2)
+@
+
+Now we can look at the p-global values and decide which covariates will be modelled globally the next time. These covariates are defined by the argument "global". The intercept is not plotted anymore because 1 is not element of "select".
+
+<<fig=TRUE,width=12,height=15,eval=FALSE>>=
+star.sequential(Insolvency ~ Sector + Legal + Pecuniary_Reward + Seed_Capital
++ Debt_Capital + Employees, insolvency, cex.cat = 1, cex.labels = 1.2, dist.y 
+= 1.1, lwd.circle = 2, test.glob = TRUE, globcircle = TRUE, dist.x = 1.2
+, global = c(2,3,5,10), select = c(4,6:9), lwd.global = 1.8)
+@
+
+Effect Stars for the cumulative logit model for some covariates of the insolvency data.
+
+<<fig=TRUE,width=12,height=15,eval=FALSE>>=
+m2 <- star.cumulative(Insolvency ~ Sector + Clientele + Employees, insolvency,
+globcircle = TRUE, test.glob = TRUE, cex.cat = 1, cex.labels = 1.2,
+lwd.circle = 2, lwd.global = 1.8)
+@
+
+
+
+\end{document}

@@ -1,0 +1,31 @@
+% \VignetteIndexEntry{Canadian Women's Labour-Force Participation}}
+% \VignetteDepends{}
+
+\documentclass[a4paper]{article}
+
+\title{Canadian Women's Labour-Force Participation}
+
+\begin{document}
+
+\maketitle
+
+\setkeys{Gin}{width=1.1\textwidth}
+
+<<echo=FALSE>>=
+options(width=80)
+@
+
+<<results=hide>>=
+library(EffectStars)
+data(womenlabour)
+womenlabour$IncomeHusband<-scale(womenlabour$IncomeHusband)
+@
+
+Effect Stars for the multinomial logit model for womens labour force participation data. 
+
+<<fig=TRUE,width=15,height=15>>=
+star.nominal(Participation ~ IncomeHusband + Children + Region, womenlabour,
+cex.cat = 1, cex.labels = 1.2, lwd.circle = 1.5)
+@
+
+\end{document}

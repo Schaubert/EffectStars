@@ -1,0 +1,42 @@
+% \VignetteIndexEntry{British Election Panel Study}
+% \VignetteDepends{}
+
+\documentclass[a4paper]{article}
+
+\title{British Election Panel Study}
+
+\begin{document}
+
+\maketitle
+
+\setkeys{Gin}{width=1.1\textwidth}
+
+<<echo=FALSE>>=
+options(width=80)
+@
+
+<<results=hide>>=
+library(EffectStars)
+data(BEPS)
+BEPS$Europe<-scale(BEPS$Europe)
+BEPS$Age<-scale(BEPS$Age)
+@
+
+Effect Stars for the multinomial logit model for the BEPS data. The variable leader is category-specific, so it has to be transformed first. 
+
+<<>>=
+BEPS$Leader_Labour<-BEPS$Leader_Labour-BEPS$Leader_Cons
+BEPS$Leader<-BEPS$Leader_Labour
+BEPS$Leader_Liberals<-BEPS$Leader_Liberals-BEPS$Leader_Cons
+@
+
+<<fig=TRUE,width=15,height=15>>=
+star.nominal(Vote ~ Age + Household + National_Economy + Household + Leader + 
+Europe + Political_Knowledge + Gender, data = BEPS, 
+xij = list(Leader~Leader_Labour+Leader_Liberals), catstar = F
+, cex.cat = 1, cex.labels = 1.2, lwd.circle = 1.5, col.circle = "blue")
+@
+
+
+
+\end{document}

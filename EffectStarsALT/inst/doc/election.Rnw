@@ -1,0 +1,83 @@
+% \VignetteIndexEntry{Election data}
+% \VignetteDepends{}
+
+\documentclass[a4paper]{article}
+
+\title{Election data}
+
+\begin{document}
+
+\maketitle
+
+\setkeys{Gin}{width=1.1\textwidth}
+
+<<echo=FALSE>>=
+options(width=80)
+@
+
+<<results=hide>>=
+library(EffectStars)
+data(election)
+@
+
+Effect Stars for the multinomial logit model for the election data. 
+
+<<fig=TRUE,width=15,height=25,eval=FALSE>>=
+star.nominal(Partychoice ~ Age + Religion + Democracy + Pol.Interest + 
+Unemployment + Highschool + Union + West + Gender, election, cex.cat = 1,
+cex.labels = 1.2, lwd.circle = 1.5, dist.cov = 0.8)
+@
+
+Effect Stars for the multinomial logit model for the election data using effect coding for the categorical predictor religion.
+
+<<fig=TRUE,width=15,height=25,eval=FALSE>>=
+star.nominal(Partychoice ~ Age + Religion + Democracy + Pol.Interest +
+Unemployment + Highschool + Union + West + Gender, election, cex.cat = 1,
+cex.labels = 1.2, lwd.circle = 1.5, dist.cov = 0.8, pred.coding = "effect")
+@
+
+Effect Stars for the multinomial logit model for the election data including confidence intervals. 
+
+<<fig=TRUE,width=15,height=25,eval=FALSE>>=
+star.nominal(Partychoice ~ Age + Religion + Democracy + Pol.Interest + 
+Unemployment + Highschool + Union + West + Gender, election, cex.cat = 1,
+cex.labels = 1.2, conf.int = TRUE, dist.cov = 0.7, lwd.circle = 0.01, 
+lty.circle = "solid", col.circle = "gray90")
+@
+
+Effect Stars for the multinomial logit model for the election data with reference category "FDP". Leaving away the p-values can sometimes increase clarity.
+
+<<fig=TRUE,width=15,height=25,eval=FALSE>>=
+star.nominal(Partychoice ~ Age + Religion + Democracy + Pol.Interest + 
+Unemployment + Highschool + Union + West + Gender, election, cex.cat = 1,
+cex.labels = 1.2, lwd.circle = 1.5, refLevel = 3, symmetric = FALSE, 
+dist.cov = 0.8, printpvalues = FALSE)
+@
+
+
+Effect Stars for the multinomial logit model for the election data with four category-specific covariates.
+
+
+<<fig=TRUE,width=15,height=25,eval=FALSE>>=
+election[,13:16] <- election[,13:16] - election[,12]
+election[,18:21] <- election[,18:21] - election[,17]
+election[,23:26] <- election[,23:26] - election[,22]
+election[,28:31] <- election[,28:31] - election[,27]
+
+election$Social <- election$Social_SPD
+election$Immigration <- election$Immigration_SPD
+election$Nuclear <- election$Nuclear_SPD
+election$Left_Right <- election$Left_Right_SPD
+
+star.nominal(Partychoice ~ Social + Immigration + Nuclear + Left_Right + Age + 
+Religion + Democracy + Pol.Interest + Unemployment + Highschool + Union + West + 
+Gender, data = election, 
+xij = list(Social ~ Social_SPD + Social_FDP + Social_Greens + Social_Left,
+Immigration ~ Immigration_SPD + Immigration_FDP + Immigration_Greens + Immigration_Left,
+Nuclear ~ Nuclear_SPD + Nuclear_FDP + Nuclear_Greens + Nuclear_Left,
+Left_Right ~ Left_Right_SPD + Left_Right_FDP + Left_Right_Greens + Left_Right_Left),
+cex.cat = 1, cex.labels = 1.4, lwd.circle = 1.5, dist.cov = 0.8)
+@
+
+
+\end{document}

@@ -1,0 +1,45 @@
+% \VignetteIndexEntry{Alligator food}
+% \VignetteDepends{}
+
+\documentclass[a4paper]{article}
+
+\title{Alligator food}
+
+\begin{document}
+
+\maketitle
+
+\setkeys{Gin}{width=1.1\textwidth}
+
+<<echo=FALSE>>=
+options(width=80)
+@
+
+<<results=hide>>=
+library(EffectStars)
+data(alligator)
+@
+
+Effect Stars for multinomial logit model for alligator data.
+
+<<fig=TRUE,width=15,height=20>>=
+star.nominal(Food ~ Size + Lake + Gender, alligator, cex.cat = 1, cex.labels 
+= 1.2, lwd.circle = 1.5)
+@
+
+Effect Stars for multinomial logit model for alligator data with unscaled stars and with effect coding for categorical predictors.
+
+<<fig=TRUE,width=20,height=20>>=
+star.nominal(Food ~ Size + Lake + Gender, alligator, cex.cat = 1, cex.labels 
+= 1.2, lwd.circle = 1.5, scale = FALSE, pred.coding = "effect")
+@
+
+Effect Stars for multinomial logit model for alligator data without intercept.
+
+<<fig=TRUE,width=15,height=20>>=
+star.nominal(Food ~ Size + Lake + Gender, alligator, cex.cat = 1, cex.labels 
+= 1.2, lwd.circle = 1.5, select = 2:6, col.circle = "blue")
+@
+
+
+\end{document}
